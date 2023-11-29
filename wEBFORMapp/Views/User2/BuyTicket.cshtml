@@ -1,0 +1,123 @@
+﻿@using wEBFORMapp.Models
+
+
+@{
+    ViewData["Title"] = "BuyTicket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string username = "";
+    if (ViewBag.username != null)
+    {
+        username = ViewBag.username;
+    }
+}
+<style>
+    form {
+        max-width: 500px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    button {
+        padding: 10px;
+        background-color: #008CBA;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #005A6E;
+        }
+
+    #total {
+        font-weight: bold;
+    }
+
+    #mess {
+        color: red;
+    }
+</style>
+<h1>BuyTicket </h1>
+
+<form action="/user2/BuyTicket" method="post">
+    <div>
+        <label>ID:</label>
+        <input name="TicketId" value="@Model.TicketId" readonly /><br />
+
+    </div>
+
+    <div>
+        <label>ten tran dau:</label>
+        <input name="TenTranDau" value="@Model.TenTranDau" readonly /><br />
+
+    </div>
+    <div>
+        <label>Price:</label>
+        <input name="Price" value="@Model.Price" id="price" readonly /><br />
+
+    </div>
+    <div>
+        <label>Time:</label>
+        <input name="Time" value="@Model.Time" /><br />
+
+    </div>
+    <div>
+        <label>Desc:</label>    <input name="Description" value="@Model.Description" readonly /><br />
+
+    </div>
+    <div>
+        <label>Quantity:</label>
+        <input name="Quantity" max="@Model.Quantity" value="1" oninput="getTotal(this,@Model.Quantity)" /> <br />
+        <p id="mess"></p>
+    </div>
+    <div>
+        <label>Total:</label>    <p id="total">@Model.Price</p>
+
+    </div>
+    <button id="btn" type="submit">Buy</button>
+</form>
+
+<script>
+
+    function getTotal(t, max) {
+        if (t.value > max) {
+            document.getElementById("btn").setAttribute("disabled", "disabled");
+            document.getElementById("mess").innerHTML = "mua nhieu vcl dcmm";
+        } else {
+            var price = document.getElementById("price").value;
+            document.getElementById("total").innerHTML = t.value * price + ".00";
+            document.getElementById("btn").removeAttribute("disabled");
+            document.getElementById("mess").innerHTML = "";
+        }
+        CheckQuantity(t);
+
+
+    }
+    function CheckQuantity(t) {
+        var btn = document.getElementById("btn");
+        var mess = document.getElementById("mess");
+        if (t.value <= 0) {
+            btn.setAttribute("disabled", "disabled");
+            mess.innerHTML = "quantity must be greater than 0";
+        } else {
+            btn.removeAttribute("disabled");
+            mess.innerHTML = "";
+        }
+    }
+</script>

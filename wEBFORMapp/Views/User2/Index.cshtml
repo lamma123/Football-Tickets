@@ -1,0 +1,122 @@
+﻿@using wEBFORMapp.Models
+
+
+@{
+    List<Ticket> tickets = new List<Ticket>();
+    if (ViewBag.listTicket != null)
+    {
+        tickets = ViewBag.listTicket;
+    }
+
+}
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    th,
+    td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    #data tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #data tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    #data td a {
+        color: #008CBA;
+        text-decoration: none;
+    }
+
+        #data td a:hover {
+            text-decoration: underline;
+        }
+
+</style>
+<a href="/User2/history">history transaction </a>
+<input type="search" id="search" oninput="searchTicket()" />
+<table>
+    <thead>
+    <th>
+        Ten tran dau:
+    </th>
+    <th>
+        Thời gian
+    </th>
+
+    <th>
+        Loại Vé
+    </th>
+    <th>
+        Giá tiền
+    </th>
+    <th>Số Lượng</th>
+    <th>  Chi Tiết  </th>
+    <th>   Mua </th>
+
+    </thead>
+    <tbody id="data">
+        @{
+            foreach (var item in tickets)
+            {
+                <tr>
+
+                    <td>
+                        @item.TenTranDau
+                    </td>
+                    <td>
+                        @item.Time
+                    </td>
+
+                    <td>
+                        @item.Category.CategoryName
+                    </td>
+                    <td>
+                        @item.Price
+                    </td>
+                    <td>@item.Quantity</td>
+                    <td><a href="/user2/details?id=@item.TicketId">Details</a></td>
+                    <td><a href="/user2/BuyTicket?id=@item.TicketId">Buy ticKet</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    function searchTicket() {
+        var search = document.getElementById("search").value;
+
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("searchTicket")",
+            data: { search: search },
+            dataType: "text",
+            success: function (msg) {
+                document.getElementById("data").innerHTML = msg;
+            },
+            //error: function (req, status, error) {
+            //    console.log(msg);
+            //}
+        });
+    }
+
+</script>

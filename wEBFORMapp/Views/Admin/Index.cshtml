@@ -1,0 +1,143 @@
+﻿@model IEnumerable<wEBFORMapp.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@*<input type="search" id="search" oninput="searchTicket()" />*@
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    th,
+    td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    #data tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #data tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    #data td a {
+        color: #008CBA;
+        text-decoration: none;
+    }
+
+        #data td a:hover {
+            text-decoration: underline;
+        }
+
+</style>
+<form action="/admin/index" method="get">
+    <input name="tentrandau" type="text" />
+    <button type="submit">Search</button>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th style="background-color:limegreen">
+                @Html.DisplayNameFor(model => model.TicketId)
+            </th>
+            <th style="background-color:limegreen;">
+                @Html.DisplayNameFor(model => model.TenTranDau)
+            </th >
+            <th style="background-color:limegreen;">
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th style="background-color:limegreen;" >
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th style="background-color:limegreen;">
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th style="background-color:limegreen;">
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th style="background-color:limegreen;">
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+        </tr>
+    </thead>
+    <tbody id="data">
+@foreach (var item in Model) {
+        <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => item.TicketId)
+                </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenTranDau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+
+            </td>
+           
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TicketId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TicketId">Details</a> |
+                <a onclick="deleteticket(@item.TicketId)">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    function searchTicket() {
+        var search = document.getElementById("search").value;
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("searchTicket")",
+            data: { search: search },
+            dataType: "text",
+            success: function (msg) {
+                document.getElementById("data").innerHTML = msg;
+            },
+            error: function (req, status, error) {
+                console.log(msg);
+            }
+        });
+    }
+    function deleteticket(id){
+        if(confirm("do you want xoa")==true){
+            window.location.href="/admin/delete/"+id;
+        }
+    }
+
+
+</script>

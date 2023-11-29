@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<form method="post" action="/login">
+    uesrname:
+    <input type="text" name="username" />
+    pass:
+    <input  type="password" name="password"/>
+    <button>login</button>
+    @{
+        if(ViewBag.Message != null)
+        {
+            <p>@ViewBag.Message</p>
+        }
+
+
+
+    }
+</form>

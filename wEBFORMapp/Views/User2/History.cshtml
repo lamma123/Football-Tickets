@@ -1,0 +1,96 @@
+﻿@using wEBFORMapp.Models;
+@{
+    ViewData["Title"] = "History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h1>History</h1>
+
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    th,
+    td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    #data tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #data tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    #data td a {
+        color: #008CBA;
+        text-decoration: none;
+    }
+
+        #data td a:hover {
+            text-decoration: underline;
+        }
+
+</style>
+
+@{
+    if (ViewBag.Username != null)
+    {
+        string username = ViewBag.Username;
+        Prn211ProjectContext context = new Prn211ProjectContext();
+        List<Order> orders = context.Orders.Where(x => x.Username.Equals(username)).ToList();
+
+
+
+        <table>
+            <thead>
+            <th>Ngày Mua</th>
+            <th>Ten Tran Dau</th>
+            <th>Thời gian </th>
+            <th>Giá Vé</th>
+            <th>Số lượng</th>
+            <th>Tổng tiền</th>
+            <th>Mã vé</th>
+            </thead>
+            <tbody>
+                @foreach (var o in orders)
+                {
+                    OrderDetail od = context.OrderDetails.SingleOrDefault(x => x.OrderId == o.OrderId);
+                    Ticket ticket = context.Tickets.SingleOrDefault(x => x.TicketId == od.TicketId);
+                    <tr>
+                        <td>@o.Orderdate</td>
+                        <td>@ticket.TenTranDau</td>
+                        <td>@ticket.Time</td>
+                        <td>@od.Price</td>
+                        <td>@od.Quantity</td>
+                        <td>@(od.Price * od.Quantity)</td>
+                        <td>@o.Code</td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+
+
+
+    }
+}

@@ -1,0 +1,84 @@
+﻿@model wEBFORMapp.Models.Ticket
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+<style>
+    /* Set a max width for the container */
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    /* Style the headings */
+    h1, h4 {
+        text-align: center;
+    }
+
+    /* Add some space between the definition list terms */
+    dt {
+        margin-top: 10px;
+    }
+
+        /* Style the definition list terms */
+        dt.col-sm-2 {
+            font-weight: bold;
+        }
+
+    /* Style the definition list descriptions */
+    dd.col-sm-10 {
+        margin-bottom: 10px;
+    }
+
+    
+
+</style>
+<div>
+    <h4>Ticket</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TenTranDau)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenTranDau)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.TicketId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
